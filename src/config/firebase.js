@@ -112,7 +112,7 @@ export const addUnknownWords = async (question) => {
       question: question,
     });
   } else {
-    console.log("Entry already exists for the user");
+  
   }
 };
 
