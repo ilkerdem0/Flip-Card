@@ -190,7 +190,7 @@ export const getUnknownWords = async () => {
 
     return unknownWords;
   } catch (error) {
-    console.error("Error getting unknownWords: ", error);
+    
     throw error;
   }
 };
