@@ -81,7 +81,7 @@ const getUserId = () => {
     return user.uid;
   } else {
     // Handle the case where the user is not authenticated
-    console.error("User not authenticated");
+    
     return null;
   }
 };
