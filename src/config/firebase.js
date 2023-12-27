@@ -22,13 +22,13 @@ import {
   collection,
 } from "firebase/firestore";
 const firebaseConfig = {
-  apiKey: "AIzaSyCHCFoSImC92nWYW851iyNTX-PS5pqYElQ",
-  authDomain: "flip-card-f2b72.firebaseapp.com",
-  projectId: "flip-card-f2b72",
-  storageBucket: "flip-card-f2b72.appspot.com",
-  messagingSenderId: "1099466678025",
-  appId: "1:1099466678025:web:0957ccef5711c063c77dd8",
-  measurementId: "G-PSR2YHTCN5",
+  apiKey: "AIzaSyAgRqIT30Dv7gdp0RcxiJNqIMUPzCXULIk",
+  authDomain: "flip-card-9fc1b.firebaseapp.com",
+  projectId: "flip-card-9fc1b",
+  storageBucket: "flip-card-9fc1b.appspot.com",
+  messagingSenderId: "579653129142",
+  appId: "1:579653129142:web:8862f0ff3c0acbdfa96717",
+  measurementId: "G-8C12KQ7RHW"
 };
 
 import { useNavigation } from "@react-navigation/native";
@@ -42,6 +42,7 @@ export const signUp = async (name, email, password, setIsLoading) => {
     setIsLoading(true);
     await createUserWithEmailAndPassword(auth, email, password);
     await updateProfile(auth.currentUser, { displayName: name });
+
     Alert.alert("Success", "Successfully signed up");
     setIsLoading(false);
   } catch (error) {
@@ -56,7 +57,7 @@ export const signIn = async (email, password, setIsLoading) => {
     await signInWithEmailAndPassword(auth, email, password);
     setIsLoading(false);
     const res = await authState();
-
+    console.log(res.providerData[0])
     return res;
   } catch (error) {
     alert(error);

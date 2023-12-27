@@ -14,6 +14,7 @@ import { Context } from "./src/Context/Context";
 import { Provider } from "react-native-paper";
 import Words from "./src/screens/Words/Words";
 import { LogBox } from "react-native";
+import Admin from "./src/screens/Admin/Admin";
 LogBox.ignoreLogs([
   "Can't perform a React state update on an unmounted component.",
 ]);
@@ -72,12 +73,26 @@ const App = () => {
     );
   };
 
+  const AdminStack = () => {
+    return (
+      <Stack.Navigator>
+        
+        <Stack.Screen
+          name="Admin"
+          options={{ headerShown: false }}
+          component={Admin}
+        />
+      
+      </Stack.Navigator>
+    );
+  };
+
   const Navigation = () => {
     const context = useContext(Context);
     return (
       <NavigationContainer>
         <Provider>
-          {context.isAuthenticated ? <AuthenticatedStack /> : <AuthStack />}
+          {context.isAuthenticated ? (context.user.displayName == "admin" ? <AdminStack /> : <AuthenticatedStack />) : <AuthStack />}
         </Provider>
       </NavigationContainer>
     );

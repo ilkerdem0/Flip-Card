@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useRef } from "react";
 import {
   StyleSheet,
   Text,
@@ -17,8 +17,10 @@ import {
   ALERT_TYPE,
   Dialog,
   AlertNotificationRoot,
-  Toast,
+  Toast,  
 } from "react-native-alert-notification";
+import * as Animatable from 'react-native-animatable';
+
 import { useFocusEffect } from "@react-navigation/native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 export default function Quiz() {
@@ -36,6 +38,10 @@ export default function Quiz() {
       setFavIcon("star-o");
     }, [])
   );
+  const cardRef = useRef(null);
+  const rotateCard = (ref) => {
+    cardRef.current.flipInX(360); // react-native-animatable'ın swing animasyonu
+  };
   useEffect(() => {
     async function fetchQuiz() {
       const quiz = await getQuiz();
@@ -45,6 +51,15 @@ export default function Quiz() {
 
     fetchQuiz();
   }, []);
+  const rotate360 = { 
+    0: {
+      rotate: '0deg',
+    },
+    1: {
+      rotate: '360deg',
+    },
+  };
+  
 
   return (
     <AlertNotificationRoot>
@@ -52,7 +67,7 @@ export default function Quiz() {
         style={{ flex: 1, alignItems: "center", backgroundColor: "#FBECFF" }}
       >
         {quiz.length > 0 ? (
-          <View>
+          <Animatable.View ref={cardRef}>
             {/* Rectangle */}
             <View
               style={{
@@ -240,6 +255,7 @@ export default function Quiz() {
                       });
                       addUnknownWords(quiz[questionNumber]);
                     }
+                    rotateCard();
                     if (questionNumber + 2 <= quiz.length) {
                       setQuestionNumber(questionNumber + 1);
                     } else {
@@ -307,6 +323,7 @@ export default function Quiz() {
                       });
                       addUnknownWords(quiz[questionNumber]);
                     }
+                    rotateCard();
                     if (questionNumber + 2 <= quiz.length) {
                       setQuestionNumber(questionNumber + 1);
                     } else {
@@ -362,6 +379,7 @@ export default function Quiz() {
                         " olacaktı !",
                       button: "Kapat",
                     });
+                    rotateCard();
                     addUnknownWords(quiz[questionNumber]);
                     if (questionNumber + 2 <= quiz.length) {
                       setQuestionNumber(questionNumber + 1);
@@ -392,7 +410,7 @@ export default function Quiz() {
                 </TouchableOpacity>
               </View>
             </View>
-          </View>
+          </Animatable.View>
         ) : (
           <Text>Loading...</Text>
         )}
