@@ -82,7 +82,7 @@ const getUserId = () => {
     return user.uid;
   } else {
     // Handle the case where the user is not authenticated
-    
+
     return null;
   }
 };
@@ -113,8 +113,35 @@ export const addUnknownWords = async (question) => {
       question: question,
     });
   } else {
-  
+
   }
+};
+
+export const addQuiz = async (question, answer1, answer2, trueAnswer) => {
+  const userId = getUserId();
+  if (!userId) {
+    console.error("User not authenticated");
+    return;
+  }
+
+  const key = uuid();
+
+try {
+  await setDoc(doc(db, "quiz", key), {
+    answer: answer1,
+    answer2: answer2,
+    question: question,
+    trueAnswer: trueAnswer
+
+  });
+  Alert.alert("Soru başarıyla eklendi.")
+  return true
+} catch (error) {
+  Alert.alert("Soru eklenemedi!")
+}
+return false
+
+
 };
 
 export const addKnownWords = async (question) => {
@@ -191,7 +218,7 @@ export const getUnknownWords = async () => {
 
     return unknownWords;
   } catch (error) {
-    
+
     throw error;
   }
 };
@@ -258,27 +285,7 @@ export const authState = async () => {
   return res;
 };
 
-export const getMessages = async (id, setMessages) => {
-  const res = await onSnapshot(doc(db, "chats", id), (doc) => {
-    setMessages(doc.data()?.messages ?? []);
-  });
-  console.log(res);
-  return res;
-};
 
-export const addMessage = async (id, message) => {
-  try {
-    await setDoc(
-      doc(db, `chats/${id}`),
-      {
-        messages: message,
-      },
-      { merge: true }
-    );
-  } catch (error) {
-    console.log(error);
-  }
-};
 
 export const updateUser = async (name, email) => {
   try {

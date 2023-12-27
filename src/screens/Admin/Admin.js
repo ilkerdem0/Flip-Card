@@ -6,11 +6,12 @@ import {
   SafeAreaView,
   TouchableOpacity,
   TextInput,
+  Alert,
 } from "react-native";
 import { Button } from "react-native-paper";
 import Entypo from "react-native-vector-icons/Entypo";
 import { LinearGradient } from "expo-linear-gradient";
-import { signUp } from "../../config/firebase";
+import { addQuiz } from "../../config/firebase";
 import { Context } from "../../Context/Context";
 const RegisterTextInput = (props) => {
   return (
@@ -20,6 +21,7 @@ const RegisterTextInput = (props) => {
       placeholder={props.placeholder}
       onChangeText={(text) => props.setState(text)}
       secureTextEntry={props.security}
+      value={props.value}
     />
   );
 };
@@ -47,7 +49,9 @@ const Admin = ({ navigation }) => {
       />
       <View style={styles.container}>
         <View style={{ flex: 2 }} />
-        <TouchableOpacity
+        <View style={{ flexDirection: "column", alignItems: "space-between" }}>
+          <View ></View>
+          <TouchableOpacity
             onPress={() => {
               context.logout();
             }}
@@ -59,27 +63,33 @@ const Admin = ({ navigation }) => {
               size={36}
             />
           </TouchableOpacity>
+        </View>
+       
         <View style={{ flex: 1 }} />
         <Text style={styles.signText}>Soru Ekle</Text>
         <RegisterTextInput
           placeholder={questionPlaceholder}
           setState={setQuestion}
+          value={question}
           security={false}
         />
         <RegisterTextInput
           placeholder={answerPlaceholder1}
           setState={setAnswer1}
+          value={answer1}
           security={false}
         />
         <RegisterTextInput
           placeholder={answerPlaceholder2}
           setState={setAnswer2}
+          value={answer2}
           security={false}
         />
 
 <RegisterTextInput
           placeholder={trueAnswerPlaceholder}
           setState={setTrueAnswer}
+          value={trueAnswer}
           security={false}
         />
 
@@ -89,12 +99,24 @@ const Admin = ({ navigation }) => {
           style={styles.button}
           contentStyle={styles.buttonContent}
           labelStyle={styles.buttonLabel}
-          onPress={() => {
-            signUp(name, email, password, setIsLoading);
+          onPress={async () => {
+            if(question != "" && answer1 != "" && answer2 != "" && trueAnswer != ""){
+                const res = await addQuiz(question,answer1,answer2,trueAnswer)
+                console.log(res)
+                if(res){
+                    setQuestion("")
+                    setAnswer1("")
+                    setAnswer2("")
+                    setTrueAnswer("")
+                }
+            }else {
+                Alert.alert("Bütün alanlar doldurulmalıdır!")
+            }
+            
           }}
           loading={isLoading}
         >
-          Kayıt Ol
+          Ekle
         </Button>
         <View style={{ flex: 4 }} />
       </View>
