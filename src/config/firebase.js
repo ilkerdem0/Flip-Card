@@ -66,14 +66,7 @@ export const signIn = async (email, password, setIsLoading) => {
   }
 };
 
-export const isSigned = () => {
-  const navigation = useNavigation();
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      navigation.navigate("Welcome");
-    }
-  });
-};
+
 const getUserId = () => {
   const user = auth.currentUser;
 
