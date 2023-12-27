@@ -28,26 +28,13 @@ import { addChat, getChats, authState } from "../../config/firebase";
 
 const Quizs = ({ navigation }) => {
   const pageTitle = "Kategoriler";
-  const indicatorColor = "#3A2E61";
-  const backColor = ["#E4DEE5", "#FED6E3"];
-  const context = useContext(Context);
-  const [showDialog, setShowDialog] = useState(false);
-  const [email, setEmail] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [chats, setChats] = useState([]);
-  const [currentEmail, setCurrentEmail] = useState("");
-  const [dataLoading, setDataLoading] = useState(true);
+
+  const backColor = ["#E4DEE5", "#FBECFF"];
+
 const options = [
     "Kolay","Orta","Zor"
 ]
-  const getData = async () => {
-    console.log(context.user);
-    await getChats(context.user.email, setChats, setDataLoading);
-  };
-
-  useEffect(() => {
-    getData();
-  }, [context.user]);
+ 
 
   const renderListItem = ({item}) => (
     <List.Item

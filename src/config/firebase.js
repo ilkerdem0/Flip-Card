@@ -20,6 +20,7 @@ import {
   where,
   onSnapshot,
   collection,
+  deleteDoc
 } from "firebase/firestore";
 const firebaseConfig = {
   apiKey: "AIzaSyAgRqIT30Dv7gdp0RcxiJNqIMUPzCXULIk",
@@ -302,5 +303,33 @@ export const updateUser = async (name, email) => {
     }
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const deleteAllFavorites = async () => {
+  const userId = getUserId();
+  if (!userId) {
+    console.error("User not authenticated");
+    return;
+  }
+
+  try {
+    // Get all favorite entries for the user
+    const querySnapshot = await getDocs(
+      query(collection(db, "favorites"), where("userId", "==", userId))
+    );
+
+    // Delete each favorite entry
+    const deletePromises = querySnapshot.docs.map(async (doc) => {
+      await deleteDoc(doc.ref);
+    });
+
+    // Wait for all delete operations to complete
+    await Promise.all(deletePromises);
+
+    console.log("All favorites deleted successfully");
+  } catch (error) {
+    console.error("Error deleting favorites: ", error);
+    throw error;
   }
 };

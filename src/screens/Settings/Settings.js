@@ -49,7 +49,7 @@ const Settings = () => {
   };
 
   return (
-    <BlurView intensity={105} style={styles.body}>
+    <View intensity={105} style={styles.body}>
       <SafeAreaView style={{ marginHorizontal: 20, flex: 1 }}>
         <View style={{ flex: 1 }}></View>
         <View style={{ flexDirection: "column", alignItems: "space-between" }}>
@@ -96,14 +96,14 @@ const Settings = () => {
 
         <View style={{ flex: 5 }}></View>
       </SafeAreaView>
-    </BlurView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   body: {
     flex: 1,
-    backgroundColor: "#D7D2E0",
+    backgroundColor: "#FBECFF",
   },
   input: {
     backgroundColor: "#D0E3E7",

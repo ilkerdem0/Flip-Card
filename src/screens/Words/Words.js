@@ -17,6 +17,7 @@ import { List } from "react-native-paper";
 import { Context } from "../../Context/Context";
 import { useFocusEffect } from "@react-navigation/native";
 import {
+  deleteAllFavorites,
   getFavoriteWords,
   getUnknownWords,
   getKnownWords,
@@ -25,7 +26,7 @@ import SegmentedControlTab from "react-native-segmented-control-tab";
 const Words = ({ navigation }) => {
   const pageTitle = "Messages";
   const indicatorColor = "#3A2E61";
-  const backColor = ["#E4DEE5", "#FED6E3"];
+  const backColor = ["#E4DEE5", "#FBECFF"];
   const context = useContext(Context);
 
   const [dataLoading, setDataLoading] = useState(true);
@@ -58,7 +59,7 @@ const Words = ({ navigation }) => {
     <List.Item
       style={{
         backgroundColor: "#b8b4fc",
-        marginVertical: "5%",
+        marginBottom: "5%",
         borderRadius: 10,
       }}
       left={() => <Text style={styles.title}>{item.question.question}</Text>}
@@ -91,6 +92,20 @@ const Words = ({ navigation }) => {
 
           <BlurView intensity={105} style={styles.body}>
             <Text style={styles.pageTitle}>Kelimeler</Text>
+              <View>
+
+            <View style={{ flexDirection: "column", alignItems: "space-between" }}>
+      
+                    <TouchableOpacity onPress={async() => {
+                      if(value == 0){
+                        await deleteAllFavorites()
+                        setFavorites([])
+                      }
+                    }}>
+            <Text style={styles.cleanButton}>Temizle</Text>
+            </TouchableOpacity>
+                </View>
+              </View>
             <View style={styles.list}>
               {dataLoading ? (
                 <ActivityIndicator size={"large"} color={indicatorColor} />
@@ -119,6 +134,16 @@ export default Words;
 const styles = StyleSheet.create({
   container: {
     height: "100%",
+  },
+  cleanButton:{
+    fontStyle: "normal",
+    fontWeight: "bold",
+    fontSize: 18,
+  
+    marginRight: 25,
+    color: "black",
+
+    
   },
   avatar: {
     marginRight: 14,
@@ -149,7 +174,7 @@ const styles = StyleSheet.create({
   },
 
   list: {
-    marginTop: 34,
+    marginTop: 25,
     marginHorizontal: 20,
   },
   title: {
