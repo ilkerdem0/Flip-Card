@@ -32,6 +32,8 @@ function BottomTabNavigator() {
         }}
       />
 
+ 
+
       <Tab.Screen
         name="Home"
         component={Home}
@@ -63,6 +65,7 @@ function BottomTabNavigator() {
           ),
         }}
       />
+
     </Tab.Navigator>
   );
 }

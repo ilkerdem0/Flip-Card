@@ -62,7 +62,7 @@ const options = [
        <MaterialCommunityIcons name="chevron-right" size={36} color="#3A2E61"/>
       )}
     
-      onPress={() => navigation.navigate("Chat", { chatId: item.id })}
+      onPress={() => navigation.navigate("Quiz", { categoryName: item })}
     />
   );
 

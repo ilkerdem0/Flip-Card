@@ -10,6 +10,7 @@ import Register from "./src/screens/Register/Register";
 import Home from "./src/screens/Home/Home";
 import ContextProvider from "./src/Context/Context";
 import Quizs from "./src/screens/Quizs/Quizs";
+import Quiz from "./src/screens/Quiz/Quiz";
 import { Context } from "./src/Context/Context";
 import { Provider } from "react-native-paper";
 import Words from "./src/screens/Words/Words";
@@ -49,16 +50,22 @@ const App = () => {
   const AuthenticatedStack = () => {
     return (
       <Stack.Navigator>
-        <Stack.Screen
+          <Stack.Screen
           name="BottomTabNavigator"
           options={{ headerShown: false }}
           component={BottomTabNavigator}
         />
+          <Stack.Screen
+            name="Quiz"
+            options={{ headerShown: false }}
+            component={Quiz}
+          />
         <Stack.Screen
           name="Quizs"
           options={{ headerShown: false }}
           component={Quizs}
         />
+        
         <Stack.Screen
           name="Words"
           options={{ headerShown: false }}
@@ -69,6 +76,7 @@ const App = () => {
           options={{ headerShown: false }}
           component={Home}
         />
+      
       </Stack.Navigator>
     );
   };

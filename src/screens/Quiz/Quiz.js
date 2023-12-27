@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useEffect, useState,useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   StyleSheet,
   Text,
@@ -17,13 +17,14 @@ import {
   ALERT_TYPE,
   Dialog,
   AlertNotificationRoot,
-  Toast,  
+  Toast,
 } from "react-native-alert-notification";
 import * as Animatable from 'react-native-animatable';
-
+import Entypo from "react-native-vector-icons/Entypo";
 import { useFocusEffect } from "@react-navigation/native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-export default function Quiz() {
+export default function Quiz({ navigation,route }) {
+  console.log(route)
   const [quiz, setQuiz] = useState([]);
   const [questionNumber, setQuestionNumber] = useState(0);
   const [trueAnswers, setTrueAnswers] = useState(0);
@@ -44,14 +45,14 @@ export default function Quiz() {
   };
   useEffect(() => {
     async function fetchQuiz() {
-      const quiz = await getQuiz();
+      const quiz = await getQuiz(route.params.categoryName.toLowerCase());
 
       setQuiz(quiz);
     }
 
     fetchQuiz();
   }, []);
-  const rotate360 = { 
+  const rotate360 = {
     0: {
       rotate: '0deg',
     },
@@ -59,13 +60,26 @@ export default function Quiz() {
       rotate: '360deg',
     },
   };
-  
+
 
   return (
     <AlertNotificationRoot>
       <SafeAreaView
         style={{ flex: 1, alignItems: "center", backgroundColor: "#FBECFF" }}
       >
+   <View style={{ 
+    position: "absolute",
+  left:0,
+    top: 50,
+  }}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.goBack();
+            }}
+          >
+            <Entypo name="chevron-left" color={"#4F93F9"} size={48} />
+          </TouchableOpacity>
+        </View> 
         {quiz.length > 0 ? (
           <Animatable.View ref={cardRef}>
             {/* Rectangle */}
@@ -74,7 +88,7 @@ export default function Quiz() {
                 backgroundColor: "#FFFFFF",
                 borderRadius: 30,
                 paddingBottom: 40,
-                marginTop: "20%",
+                marginTop: "32.5%",
                 overflow: "hidden", // Çemberlerin taşan kısımlarını gizler
               }}
             >

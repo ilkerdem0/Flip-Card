@@ -117,7 +117,7 @@ export const addUnknownWords = async (question) => {
   }
 };
 
-export const addQuiz = async (question, answer1, answer2, trueAnswer) => {
+export const addQuiz = async (name,question, answer1, answer2, trueAnswer) => {
   const userId = getUserId();
   if (!userId) {
     console.error("User not authenticated");
@@ -127,7 +127,7 @@ export const addQuiz = async (question, answer1, answer2, trueAnswer) => {
   const key = uuid();
 
 try {
-  await setDoc(doc(db, "quiz", key), {
+  await setDoc(doc(db, name, key), {
     answer: answer1,
     answer2: answer2,
     question: question,
@@ -263,9 +263,9 @@ export const getFavoriteWords = async () => {
   }
 };
 
-export const getQuiz = async () => {
+export const getQuiz = async (name) => {
   try {
-    const querySnapshot = await getDocs(collection(db, "quiz"));
+    const querySnapshot = await getDocs(collection(db, name));
     const quiz = querySnapshot.docs.map((doc) => doc.data());
     console.log(quiz);
     return quiz;
