@@ -26,8 +26,8 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { addChat, getChats, authState } from "../../config/firebase";
 
 
-const Home = ({ navigation }) => {
-  const pageTitle = "Messages";
+const Quizs = ({ navigation }) => {
+  const pageTitle = "Kategoriler";
   const indicatorColor = "#3A2E61";
   const backColor = ["#E4DEE5", "#FED6E3"];
   const context = useContext(Context);
@@ -49,11 +49,18 @@ const options = [
     getData();
   }, [context.user]);
 
-  const renderListItem = (item) => (
+  const renderListItem = ({item}) => (
     <List.Item
+    style={{
+        backgroundColor: "#b8b4fc",
+        marginVertical: "5%",
+        borderRadius: 10,
+      }}
       title={item}
       titleStyle={styles.title}
-      
+      right ={() => (
+       <MaterialCommunityIcons name="chevron-right" size={36} color="#3A2E61"/>
+      )}
     
       onPress={() => navigation.navigate("Chat", { chatId: item.id })}
     />
@@ -72,11 +79,9 @@ const options = [
           </View>
           <BlurView intensity={105} style={styles.body}>
             <View style={styles.list}>
-              {dataLoading ? (
-                <ActivityIndicator size={"large"} color={indicatorColor} />
-              ) : (
+              
                 <FlatList data={options} renderItem={renderListItem} />
-              )}
+             
             </View>
           </BlurView>
         </View>
@@ -85,7 +90,7 @@ const options = [
   );
 };
 
-export default Home;
+export default Quizs;
 
 const styles = StyleSheet.create({
   container: {
@@ -125,7 +130,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontStyle: "normal",
-    fontSize: 15,
+    fontSize: 18,
     fontWeight: "bold",
     lineHeight: 23,
     letterSpacing: 0.5,

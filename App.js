@@ -9,7 +9,7 @@ import Register from "./src/screens/Register/Register";
 
 import Home from "./src/screens/Home/Home";
 import ContextProvider from "./src/Context/Context";
-import Quiz from "./src/screens/Quiz/Quiz";
+import Quizs from "./src/screens/Quizs/Quizs";
 import { Context } from "./src/Context/Context";
 import { Provider } from "react-native-paper";
 import Words from "./src/screens/Words/Words";
@@ -55,9 +55,9 @@ const App = () => {
           component={BottomTabNavigator}
         />
         <Stack.Screen
-          name="Quiz"
+          name="Quizs"
           options={{ headerShown: false }}
-          component={Quiz}
+          component={Quizs}
         />
         <Stack.Screen
           name="Words"

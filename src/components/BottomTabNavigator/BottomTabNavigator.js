@@ -1,6 +1,7 @@
 import * as React from "react";
 import Home from "../../screens/Home/Home";
 import Quiz from "../../screens/Quiz/Quiz";
+import Quizs from "../../screens/Quizs/Quizs";
 import Words from "../../screens/Words/Words";
 import Settings from "../../screens/Settings/Settings";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -21,8 +22,8 @@ function BottomTabNavigator() {
       }}
     >
       <Tab.Screen
-        name="Quiz"
-        component={Quiz}
+        name="Quizs"
+        component={Quizs}
         options={{
           headerShown: false,
           tabBarIcon: () => (
