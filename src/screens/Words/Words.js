@@ -21,6 +21,8 @@ import {
   getFavoriteWords,
   getUnknownWords,
   getKnownWords,
+  deleteAllKnownWords,
+  deleteAllUnknownWords,
 } from "../../config/firebase";
 import SegmentedControlTab from "react-native-segmented-control-tab";
 const Words = ({ navigation }) => {
@@ -100,6 +102,12 @@ const Words = ({ navigation }) => {
                       if(value == 0){
                         await deleteAllFavorites()
                         setFavorites([])
+                      } if( value == 1){
+                        await deleteAllUnknownWords()
+                        setUnknownWords([])
+                      }else {
+                        await deleteAllKnownWords()
+                        setKnownWords([])
                       }
                     }}>
             <Text style={styles.cleanButton}>Temizle</Text>

@@ -333,3 +333,60 @@ export const deleteAllFavorites = async () => {
     throw error;
   }
 };
+
+
+export const deleteAllKnownWords = async () => {
+  const userId = getUserId();
+  if (!userId) {
+    console.error("User not authenticated");
+    return;
+  }
+
+  try {
+    // Get all favorite entries for the user
+    const querySnapshot = await getDocs(
+      query(collection(db, "knownWords"), where("userId", "==", userId))
+    );
+
+    // Delete each favorite entry
+    const deletePromises = querySnapshot.docs.map(async (doc) => {
+      await deleteDoc(doc.ref);
+    });
+
+    // Wait for all delete operations to complete
+    await Promise.all(deletePromises);
+
+    console.log("Known Words deleted successfully");
+  } catch (error) {
+    console.error("Error deleting favorites: ", error);
+    throw error;
+  }
+};
+
+export const deleteAllUnknownWords = async () => {
+  const userId = getUserId();
+  if (!userId) {
+    console.error("User not authenticated");
+    return;
+  }
+
+  try {
+    // Get all favorite entries for the user
+    const querySnapshot = await getDocs(
+      query(collection(db, "unknownWords"), where("userId", "==", userId))
+    );
+
+    // Delete each favorite entry
+    const deletePromises = querySnapshot.docs.map(async (doc) => {
+      await deleteDoc(doc.ref);
+    });
+
+    // Wait for all delete operations to complete
+    await Promise.all(deletePromises);
+
+    console.log("Unknown Words deleted successfully");
+  } catch (error) {
+    console.error("Error deleting favorites: ", error);
+    throw error;
+  }
+};
